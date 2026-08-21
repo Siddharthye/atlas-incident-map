@@ -71,6 +71,25 @@ CORS is open on every `/api/*` route: call ATLAS straight from any browser app.
 <!-- mode=heat for the severity-weighted heatmap -->
 ```
 
+**Any stack, no iframe — one script tag:**
+
+```html
+<script src="http://localhost:4102/atlas-client.js"></script>
+<script>
+  const atlas = Atlas.connect({
+    baseUrl: 'http://localhost:4102',
+    onPoint: (point) => console.log('new incident', point.label),
+  })
+
+  atlas.report({ lat: 20.3536, lng: 85.8195, category: 'fire', label: 'Smoke' })
+  atlas.triage({ category: 'medical', description: 'not breathing', reportCount: 3 })
+    .then((result) => console.log(result.priority))   // => 'P0'
+</script>
+```
+
+`Atlas.connect()` also exposes `list({ since, category })` and
+`hotspots(window)`, and `disconnect()` closes the stream.
+
 **React — copy one file** (`src/components/embed/AtlasMapEmbed.tsx`, no
 dependencies beyond React, no maplibre in your bundle):
 
