@@ -13,8 +13,7 @@ import {
   type BlockKind,
   type Point,
 } from '@/data/campus25'
-import type { RiskPattern, RouteRisk } from '@/domain/risk-map'
-import type { SafeWalk } from '@/domain/safe-walk'
+import type { RiskPattern, RouteRisk, SafeWalk } from '@/domain/campus-overlays'
 import { MapViewport } from '@/components/ui/MapViewport'
 
 /**
