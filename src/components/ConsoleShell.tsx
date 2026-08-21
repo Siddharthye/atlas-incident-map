@@ -37,7 +37,7 @@ export function ConsoleShell({ storageBackend }: { storageBackend: string }) {
           </h1>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px]">
+        <div className="flex flex-wrap items-center gap-2 text-[10px]">
           <span className="font-mono text-ops-muted">{points.length} incidents</span>
           {SEVERITIES.map((severity) => (
             <span
@@ -60,8 +60,8 @@ export function ConsoleShell({ storageBackend }: { storageBackend: string }) {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1">
-        <div className="relative min-w-0 flex-1">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        <div className="relative min-h-[55dvh] min-w-0 flex-1 lg:min-h-0">
           <CampusMap points={points} heatmap={heatmap} tilted={tilted} focus={focus} />
 
           <div className="absolute left-3 top-3 flex gap-1.5">
@@ -70,7 +70,7 @@ export function ConsoleShell({ storageBackend }: { storageBackend: string }) {
           </div>
         </div>
 
-        <aside className="flex w-[21.5rem] shrink-0 flex-col gap-3 overflow-y-auto border-l border-ops-border p-3">
+        <aside className="flex w-full shrink-0 flex-col gap-3 overflow-y-auto border-t border-ops-border p-3 lg:w-[21.5rem] lg:border-l lg:border-t-0">
           <TriagePanel />
           <LiveFeed points={points} status={status} />
         </aside>
@@ -85,7 +85,7 @@ function MapToggle({ active, onClick, label }: { active: boolean; onClick: () =>
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded border px-2.5 py-1 text-[10px] font-bold tracking-wider transition ${
+      className={`min-h-11 rounded border px-3 py-1 text-[10px] font-bold tracking-wider transition sm:min-h-0 sm:px-2.5 ${
         active
           ? 'border-ops-accent/60 bg-ops-accent/15 text-ops-accent'
           : 'border-ops-border bg-ops-panel/90 text-ops-muted hover:border-ops-muted'
