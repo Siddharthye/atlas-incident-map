@@ -18,10 +18,10 @@ export const BUILDING_COLORS = {
 
 /** The sacred severity palette. Never remap these. */
 export const SEVERITY_COLORS = {
-  P0: '#ef4444',
-  P1: '#f97316',
-  P2: '#eab308',
-  P3: '#38bdf8',
+  P0: '#ff453a',
+  P1: '#ff9f0a',
+  P2: '#ffd60a',
+  P3: '#a78bfa',
 } as const
 
 export const CAMPUS_SOURCE = 'campus'
@@ -49,7 +49,7 @@ export function buildCampusStyle(): StyleSpecification {
       {
         id: 'ground',
         type: 'background',
-        paint: { 'background-color': '#05070d' },
+        paint: { 'background-color': '#08070c' },
       },
       {
         // Faint cyan footprint outlines read as "blueprint" — they ground the
@@ -58,7 +58,7 @@ export function buildCampusStyle(): StyleSpecification {
         type: 'line',
         source: CAMPUS_SOURCE,
         paint: {
-          'line-color': '#38bdf8',
+          'line-color': '#a78bfa',
           'line-opacity': 0.15,
           'line-width': 1.2,
         },

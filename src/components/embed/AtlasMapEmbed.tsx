@@ -70,7 +70,7 @@ export function AtlasMapEmbed({
       src={`${origin}/widget?mode=${mode}`}
       title="ATLAS live incident map"
       className={className}
-      style={{ border: 0, width: '100%', height, display: 'block', background: '#05070d' }}
+      style={{ border: 0, width: '100%', height, display: 'block', background: '#08070c' }}
       loading="lazy"
     />
   )
