@@ -4,7 +4,9 @@ import { useMemo, useState } from 'react'
 import type { Severity } from '@/domain/types'
 import { usePointStream } from '@/hooks/use-point-stream'
 import { SEVERITY_COLORS } from '@/lib/map-style'
+import { Campus25Map } from './Campus25Map'
 import { CampusMap } from './CampusMap'
+import { InteriorPlan } from './InteriorPlan'
 import { LiveFeed } from './LiveFeed'
 import { TriagePanel } from './TriagePanel'
 
@@ -19,6 +21,9 @@ export function ConsoleShell({ storageBackend }: { storageBackend: string }) {
   const { points, status, latestP0 } = usePointStream()
   const [heatmap, setHeatmap] = useState(false)
   const [tilted, setTilted] = useState(true)
+  /* Three surfaces, one slot: the vector map, the Campus 25 route map, and
+     the building interior — the outdoor/indoor pair AEGIS itself ships. */
+  const [view, setView] = useState<'map' | 'campus' | 'plan'>('map')
 
   const bySeverity = useMemo(() => {
     const counts: Record<Severity, number> = { P0: 0, P1: 0, P2: 0, P3: 0 }
@@ -62,11 +67,27 @@ export function ConsoleShell({ storageBackend }: { storageBackend: string }) {
 
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         <div className="relative min-h-[55dvh] min-w-0 flex-1 lg:min-h-0">
-          <CampusMap points={points} heatmap={heatmap} tilted={tilted} focus={focus} />
+          {view === 'map' && (
+            <CampusMap points={points} heatmap={heatmap} tilted={tilted} focus={focus} />
+          )}
+          {view === 'campus' && (
+            <div className="h-full overflow-y-auto p-3 pt-14">
+              <Campus25Map walks={[]} />
+            </div>
+          )}
+          {view === 'plan' && <InteriorPlan />}
 
           <div className="absolute left-3 top-3 flex gap-1.5">
-            <MapToggle active={heatmap} onClick={() => setHeatmap((value) => !value)} label="HEAT" />
-            <MapToggle active={tilted} onClick={() => setTilted((value) => !value)} label="3D" />
+            <MapToggle active={view === 'map'} onClick={() => setView('map')} label="LIVE" />
+            <MapToggle active={view === 'campus'} onClick={() => setView('campus')} label="CAMPUS" />
+            <MapToggle active={view === 'plan'} onClick={() => setView('plan')} label="INTERIOR" />
+            {view === 'map' && (
+              <>
+                <span aria-hidden className="mx-0.5 w-px bg-ops-border" />
+                <MapToggle active={heatmap} onClick={() => setHeatmap((value) => !value)} label="HEAT" />
+                <MapToggle active={tilted} onClick={() => setTilted((value) => !value)} label="3D" />
+              </>
+            )}
           </div>
         </div>
 
